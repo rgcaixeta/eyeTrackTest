@@ -107,7 +107,6 @@ psychoJS.start({
     {'name': 'images/140_y_f_s_a.jpg', 'path': 'images/140_y_f_s_a.jpg'},
     {'name': 'images/140_y_f_s_b.jpg', 'path': 'images/140_y_f_s_b.jpg'},
     {'name': 'webgazer-2.0.1.tp.js', 'path': 'webgazer-2.0.1.tp.js'},
-    {'name': 'demo_eye_tracking.js', 'path': 'demo_eye_tracking.js'},
   ]
 });
 
