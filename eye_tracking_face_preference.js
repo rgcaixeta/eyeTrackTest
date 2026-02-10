@@ -78,9 +78,6 @@ flowScheduler.add(trialsLoopEnd);
 
 
 
-flowScheduler.add(exitRoutineRoutineBegin());
-flowScheduler.add(exitRoutineRoutineEachFrame());
-flowScheduler.add(exitRoutineRoutineEnd());
 flowScheduler.add(quitPsychoJS, '', true);
 
 // quit if user presses Cancel in dialog box:
@@ -172,8 +169,6 @@ var left_duration_indicator;
 var right_duration_indicator;
 var feedbackClock;
 var feedback_textbox;
-var exitRoutineClock;
-var thankYoutext;
 var globalClock;
 var routineTimer;
 async function experimentInit() {
@@ -403,20 +398,6 @@ async function experimentInit() {
     editable: false,
     multiline: true,
     anchor: 'center',
-    depth: 0.0 
-  });
-  
-  // Initialize components for Routine "exitRoutine"
-  exitRoutineClock = new util.Clock();
-  thankYoutext = new visual.TextStim({
-    win: psychoJS.window,
-    name: 'thankYoutext',
-    text: 'Aguarde salvamento dos resultados ...',
-    font: 'Arial',
-    units: undefined, 
-    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
-    languageStyle: 'LTR',
-    color: new util.Color('white'),  opacity: undefined,
     depth: 0.0 
   });
   
@@ -2163,140 +2144,6 @@ function feedbackRoutineEnd(snapshot) {
     } else {
         feedbackClock.add(3.000000);
     }
-    // Routines running outside a loop should always advance the datafile row
-    if (currentLoop === psychoJS.experiment) {
-      psychoJS.experiment.nextEntry(snapshot);
-    }
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-var exitRoutineMaxDurationReached;
-var exitRoutineMaxDuration;
-var exitRoutineComponents;
-function exitRoutineRoutineBegin(snapshot) {
-  return async function () {
-    TrialHandler.fromSnapshot(snapshot); // ensure that .thisN vals are up to date
-    
-    //--- Prepare to start Routine 'exitRoutine' ---
-    t = 0;
-    frameN = -1;
-    continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
-    exitRoutineClock.reset();
-    routineTimer.reset();
-    exitRoutineMaxDurationReached = false;
-    // update component parameters for each repeat
-    // Disable downloading results to browser
-    psychoJS._saveResults = 0;
-    
-    // Generate filename for results
-    let filename = psychoJS._experiment._experimentName + '_' + psychoJS._experiment._datetime + '.csv'
-    
-    // Extract data object from experiment
-    let dataObj = psychoJS._experiment._trialsdata;
-    
-    // Convert data object to CSV
-    let data = [Object.keys(dataObj[0])].concat(dataObj).map(it => {
-        return Object.values(it).tostring()
-    }).join('\n')
-    
-    // Send data to OSF via DataPipe
-    console.log('Saving data...');
-    fetch('https://pipe.jspsych.org/api/data', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Accept: '*/*',
-        },
-        body: JSON.stringify({
-            experimentID: '3YB5Qqv7T3kb', // * DATAPIPE EXPERIMENT ID *
-            filename: filename,
-            data: data,
-        }),
-    }).then(response => response.json()).then( data => {
-        // Log response and force experiment end
-        console.log(data);
-        quitPsychoJS();
-    })
-    psychoJS.experiment.addData('exitRoutine.started', globalClock.getTime());
-    exitRoutineMaxDuration = null
-    // keep track of which components have finished
-    exitRoutineComponents = [];
-    exitRoutineComponents.push(thankYoutext);
-    
-    for (const thisComponent of exitRoutineComponents)
-      if ('status' in thisComponent)
-        thisComponent.status = PsychoJS.Status.NOT_STARTED;
-    return Scheduler.Event.NEXT;
-  }
-}
-
-
-function exitRoutineRoutineEachFrame() {
-  return async function () {
-    //--- Loop for each frame of Routine 'exitRoutine' ---
-    // get current time
-    t = exitRoutineClock.getTime();
-    frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
-    // update/draw components on each frame
-    
-    // *thankYoutext* updates
-    if (t >= 0.0 && thankYoutext.status === PsychoJS.Status.NOT_STARTED) {
-      // keep track of start time/frame for later
-      thankYoutext.tStart = t;  // (not accounting for frame time here)
-      thankYoutext.frameNStart = frameN;  // exact frame index
-      
-      thankYoutext.setAutoDraw(true);
-    }
-    
-    
-    // if thankYoutext is active this frame...
-    if (thankYoutext.status === PsychoJS.Status.STARTED) {
-    }
-    
-    // check for quit (typically the Esc key)
-    if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
-      return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
-    }
-    
-    // check if the Routine should terminate
-    if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
-      return Scheduler.Event.NEXT;
-    }
-    
-    continueRoutine = false;  // reverts to True if at least one component still running
-    for (const thisComponent of exitRoutineComponents)
-      if ('status' in thisComponent && thisComponent.status !== PsychoJS.Status.FINISHED) {
-        continueRoutine = true;
-        break;
-      }
-    
-    // refresh the screen if continuing
-    if (continueRoutine) {
-      return Scheduler.Event.FLIP_REPEAT;
-    } else {
-      return Scheduler.Event.NEXT;
-    }
-  };
-}
-
-
-function exitRoutineRoutineEnd(snapshot) {
-  return async function () {
-    //--- Ending Routine 'exitRoutine' ---
-    for (const thisComponent of exitRoutineComponents) {
-      if (typeof thisComponent.setAutoDraw === 'function') {
-        thisComponent.setAutoDraw(false);
-      }
-    }
-    psychoJS.experiment.addData('exitRoutine.stopped', globalClock.getTime());
-    // the Routine "exitRoutine" was not non-slip safe, so reset the non-slip timer
-    routineTimer.reset();
-    
     // Routines running outside a loop should always advance the datafile row
     if (currentLoop === psychoJS.experiment) {
       psychoJS.experiment.nextEntry(snapshot);
