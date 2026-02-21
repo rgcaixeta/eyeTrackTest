@@ -9,7 +9,6 @@ let expInfo = {
     'participant': '',
     'session': '001',
 };
-let PILOTING = util.getUrlParameters().has('__pilotToken');
 
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
@@ -96,7 +95,6 @@ psychoJS.start({
     {'name': 'images/140_y_f_s_a.jpg', 'path': 'images/140_y_f_s_a.jpg'},
     {'name': 'images/140_y_f_s_b.jpg', 'path': 'images/140_y_f_s_b.jpg'},
     {'name': 'webgazer-2.0.1.tp.js', 'path': 'webgazer-2.0.1.tp.js'},
-    {'name': 'demo_eye_tracking.js', 'path': 'demo_eye_tracking.js'},
   ]
 });
 
@@ -109,7 +107,7 @@ async function updateInfo() {
   currentLoop = psychoJS.experiment;  // right now there are no loops
   expInfo['date'] = util.MonotonicClock.getDateStr();  // add a simple timestamp
   expInfo['expName'] = expName;
-  expInfo['psychopyVersion'] = '2025.2.4';
+  expInfo['psychopyVersion'] = '2025.1.0dev167';
   expInfo['OS'] = window.navigator.platform;
 
 
@@ -405,7 +403,6 @@ async function experimentInit() {
 var t;
 var frameN;
 var continueRoutine;
-var routineForceEnded;
 var initializeEyetrackingMaxDurationReached;
 var initializeEyetrackingMaxDuration;
 var initializeEyetrackingComponents;
@@ -417,8 +414,6 @@ function initializeEyetrackingRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     initializeEyetrackingClock.reset();
     routineTimer.reset();
     initializeEyetrackingMaxDurationReached = false;
@@ -481,11 +476,6 @@ function initializeEyetrackingRoutineEachFrame() {
       webcamWarning.setAutoDraw(true);
     }
     
-    
-    // if webcamWarning is active this frame...
-    if (webcamWarning.status === PsychoJS.Status.STARTED) {
-    }
-    
     // check for quit (typically the Esc key)
     if (psychoJS.experiment.experimentEnded || psychoJS.eventManager.getKeys({keyList:['escape']}).length > 0) {
       return quitPsychoJS('The [Escape] key was pressed. Goodbye!', false);
@@ -493,7 +483,6 @@ function initializeEyetrackingRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -547,8 +536,6 @@ function inst1RoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     inst1Clock.reset();
     routineTimer.reset();
     inst1MaxDurationReached = false;
@@ -592,11 +579,6 @@ function inst1RoutineEachFrame() {
     }
     
     
-    // if instruction1Txt is active this frame...
-    if (instruction1Txt.status === PsychoJS.Status.STARTED) {
-    }
-    
-    
     // *inst1_resp* updates
     if (t >= 0.0 && inst1_resp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -610,11 +592,8 @@ function inst1RoutineEachFrame() {
     }
     
     // if inst1_resp is active this frame...
-    if (inst1_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = inst1_resp.getKeys({
-        keyList: typeof 'space' === 'string' ? ['space'] : 'space', 
-        waitRelease: false
-      });
+    if (inst1_resp.status == STARTED) {
+      let theseKeys = inst1_resp.getKeys({keyList: ['space'], waitRelease: false});
       _inst1_resp_allKeys = _inst1_resp_allKeys.concat(theseKeys);
       if (_inst1_resp_allKeys.length > 0) {
         inst1_resp.keys = _inst1_resp_allKeys[_inst1_resp_allKeys.length - 1].name;  // just the last key pressed
@@ -632,7 +611,6 @@ function inst1RoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -698,8 +676,6 @@ function calibrationIntroRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     calibrationIntroClock.reset();
     routineTimer.reset();
     calibrationIntroMaxDurationReached = false;
@@ -741,11 +717,6 @@ function calibrationIntroRoutineEachFrame() {
     }
     
     
-    // if calibrationTxt is active this frame...
-    if (calibrationTxt.status === PsychoJS.Status.STARTED) {
-    }
-    
-    
     // *calib1_resp* updates
     if (t >= 0.0 && calib1_resp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -759,11 +730,8 @@ function calibrationIntroRoutineEachFrame() {
     }
     
     // if calib1_resp is active this frame...
-    if (calib1_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = calib1_resp.getKeys({
-        keyList: typeof 'space' === 'string' ? ['space'] : 'space', 
-        waitRelease: false
-      });
+    if (calib1_resp.status == STARTED) {
+      let theseKeys = calib1_resp.getKeys({keyList: ['space'], waitRelease: false});
       _calib1_resp_allKeys = _calib1_resp_allKeys.concat(theseKeys);
       if (_calib1_resp_allKeys.length > 0) {
         calib1_resp.keys = _calib1_resp_allKeys[_calib1_resp_allKeys.length - 1].name;  // just the last key pressed
@@ -781,7 +749,6 @@ function calibrationIntroRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -847,8 +814,6 @@ function calibrationIntro_2RoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     calibrationIntro_2Clock.reset();
     routineTimer.reset();
     calibrationIntro_2MaxDurationReached = false;
@@ -890,11 +855,6 @@ function calibrationIntro_2RoutineEachFrame() {
     }
     
     
-    // if calibrationTxt_2 is active this frame...
-    if (calibrationTxt_2.status === PsychoJS.Status.STARTED) {
-    }
-    
-    
     // *calib1_resp_2* updates
     if (t >= 0.0 && calib1_resp_2.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -908,11 +868,8 @@ function calibrationIntro_2RoutineEachFrame() {
     }
     
     // if calib1_resp_2 is active this frame...
-    if (calib1_resp_2.status === PsychoJS.Status.STARTED) {
-      let theseKeys = calib1_resp_2.getKeys({
-        keyList: typeof 'space' === 'string' ? ['space'] : 'space', 
-        waitRelease: false
-      });
+    if (calib1_resp_2.status == STARTED) {
+      let theseKeys = calib1_resp_2.getKeys({keyList: ['space'], waitRelease: false});
       _calib1_resp_2_allKeys = _calib1_resp_2_allKeys.concat(theseKeys);
       if (_calib1_resp_2_allKeys.length > 0) {
         calib1_resp_2.keys = _calib1_resp_2_allKeys[_calib1_resp_2_allKeys.length - 1].name;  // just the last key pressed
@@ -930,7 +887,6 @@ function calibrationIntro_2RoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -1128,8 +1084,6 @@ function calibrationRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     calibrationClock.reset();
     routineTimer.reset();
     calibrationMaxDurationReached = false;
@@ -1206,22 +1160,17 @@ function calibrationRoutineEachFrame() {
     }
     
     
+    if (calibration_square.status === PsychoJS.Status.STARTED){ // only update if being drawn
+      calibration_square.setFillColor(new util.Color(callib_color), false);
+    }
+    
     // *calibration_square* updates
     if (t >= 0.5 && calibration_square.status === PsychoJS.Status.NOT_STARTED) {
-      // update params
-      calibration_square.setFillColor(new util.Color(callib_color), false);
       // keep track of start time/frame for later
       calibration_square.tStart = t;  // (not accounting for frame time here)
       calibration_square.frameNStart = frameN;  // exact frame index
       
       calibration_square.setAutoDraw(true);
-    }
-    
-    
-    // if calibration_square is active this frame...
-    if (calibration_square.status === PsychoJS.Status.STARTED) {
-      // update params
-      calibration_square.setFillColor(new util.Color(callib_color), false);
     }
     
     // *calibrationClick* updates
@@ -1236,7 +1185,7 @@ function calibrationRoutineEachFrame() {
     }
     
     // if calibrationClick is active this frame...
-    if (calibrationClick.status === PsychoJS.Status.STARTED) {
+    if (calibrationClick.status == STARTED) {
       _mouseButtons = calibrationClick.getPressed();
       if (!_mouseButtons.every( (e,i,) => (e == prevButtonState[i]) )) { // button state changed?
         prevButtonState = _mouseButtons;
@@ -1270,7 +1219,6 @@ function calibrationRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -1335,8 +1283,6 @@ function trackingTrialRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     trackingTrialClock.reset();
     routineTimer.reset();
     trackingTrialMaxDurationReached = false;
@@ -1385,11 +1331,6 @@ function trackingTrialRoutineEachFrame() {
     }
     
     
-    // if tracking_square is active this frame...
-    if (tracking_square.status === PsychoJS.Status.STARTED) {
-    }
-    
-    
     // *trackingTxt* updates
     if (t >= 0.0 && trackingTxt.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -1397,11 +1338,6 @@ function trackingTrialRoutineEachFrame() {
       trackingTxt.frameNStart = frameN;  // exact frame index
       
       trackingTxt.setAutoDraw(true);
-    }
-    
-    
-    // if trackingTxt is active this frame...
-    if (trackingTxt.status === PsychoJS.Status.STARTED) {
     }
     
     
@@ -1418,11 +1354,8 @@ function trackingTrialRoutineEachFrame() {
     }
     
     // if tracking_resp is active this frame...
-    if (tracking_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = tracking_resp.getKeys({
-        keyList: typeof 'space' === 'string' ? ['space'] : 'space', 
-        waitRelease: false
-      });
+    if (tracking_resp.status == STARTED) {
+      let theseKeys = tracking_resp.getKeys({keyList: ['space'], waitRelease: false});
       _tracking_resp_allKeys = _tracking_resp_allKeys.concat(theseKeys);
       if (_tracking_resp_allKeys.length > 0) {
         tracking_resp.keys = _tracking_resp_allKeys[_tracking_resp_allKeys.length - 1].name;  // just the last key pressed
@@ -1471,7 +1404,6 @@ function trackingTrialRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -1537,8 +1469,6 @@ function task_introRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     task_introClock.reset();
     routineTimer.reset();
     task_introMaxDurationReached = false;
@@ -1580,11 +1510,6 @@ function task_introRoutineEachFrame() {
     }
     
     
-    // if instruction1Txt_2 is active this frame...
-    if (instruction1Txt_2.status === PsychoJS.Status.STARTED) {
-    }
-    
-    
     // *start_resp* updates
     if (t >= 0.0 && start_resp.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -1598,11 +1523,8 @@ function task_introRoutineEachFrame() {
     }
     
     // if start_resp is active this frame...
-    if (start_resp.status === PsychoJS.Status.STARTED) {
-      let theseKeys = start_resp.getKeys({
-        keyList: typeof 'space' === 'string' ? ['space'] : 'space', 
-        waitRelease: false
-      });
+    if (start_resp.status == STARTED) {
+      let theseKeys = start_resp.getKeys({keyList: ['space'], waitRelease: false});
       _start_resp_allKeys = _start_resp_allKeys.concat(theseKeys);
       if (_start_resp_allKeys.length > 0) {
         start_resp.keys = _start_resp_allKeys[_start_resp_allKeys.length - 1].name;  // just the last key pressed
@@ -1620,7 +1542,6 @@ function task_introRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -1699,8 +1620,6 @@ function show_facesRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     show_facesClock.reset(routineTimer.getTime());
     routineTimer.add(5.000000);
     show_facesMaxDurationReached = false;
@@ -1766,11 +1685,6 @@ function show_facesRoutineEachFrame() {
       image_left.setAutoDraw(true);
     }
     
-    
-    // if image_left is active this frame...
-    if (image_left.status === PsychoJS.Status.STARTED) {
-    }
-    
     frameRemains = 0.0 + 5 - psychoJS.window.monitorFramePeriod * 0.75;// most of one frame period left
     if (image_left.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       // keep track of stop time/frame for later
@@ -1791,11 +1705,6 @@ function show_facesRoutineEachFrame() {
       image_right.setAutoDraw(true);
     }
     
-    
-    // if image_right is active this frame...
-    if (image_right.status === PsychoJS.Status.STARTED) {
-    }
-    
     frameRemains = 0.0 + 5 - psychoJS.window.monitorFramePeriod * 0.75;// most of one frame period left
     if (image_right.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       // keep track of stop time/frame for later
@@ -1814,11 +1723,6 @@ function show_facesRoutineEachFrame() {
       tracker.frameNStart = frameN;  // exact frame index
       
       tracker.setAutoDraw(true);
-    }
-    
-    
-    // if tracker is active this frame...
-    if (tracker.status === PsychoJS.Status.STARTED) {
     }
     
     frameRemains = 0.0 + 5 - psychoJS.window.monitorFramePeriod * 0.75;// most of one frame period left
@@ -1899,22 +1803,17 @@ function show_facesRoutineEachFrame() {
     }
     
     
+    if (left_duration_indicator.status === PsychoJS.Status.STARTED){ // only update if being drawn
+      left_duration_indicator.setProgress(((current_duration_left + total_duration_left) / 5), false);
+    }
+    
     // *left_duration_indicator* updates
     if (t >= 0 && left_duration_indicator.status === PsychoJS.Status.NOT_STARTED) {
-      // update params
-      left_duration_indicator.setProgress(((current_duration_left + total_duration_left) / 5), false);
       // keep track of start time/frame for later
       left_duration_indicator.tStart = t;  // (not accounting for frame time here)
       left_duration_indicator.frameNStart = frameN;  // exact frame index
       
       left_duration_indicator.setAutoDraw(true);
-    }
-    
-    
-    // if left_duration_indicator is active this frame...
-    if (left_duration_indicator.status === PsychoJS.Status.STARTED) {
-      // update params
-      left_duration_indicator.setProgress(((current_duration_left + total_duration_left) / 5), false);
     }
     
     frameRemains = 0 + 5 - psychoJS.window.monitorFramePeriod * 0.75;// most of one frame period left
@@ -1928,22 +1827,17 @@ function show_facesRoutineEachFrame() {
     }
     
     
+    if (right_duration_indicator.status === PsychoJS.Status.STARTED){ // only update if being drawn
+      right_duration_indicator.setProgress(((current_duration_right + total_duration_right) / 5), false);
+    }
+    
     // *right_duration_indicator* updates
     if (t >= 0 && right_duration_indicator.status === PsychoJS.Status.NOT_STARTED) {
-      // update params
-      right_duration_indicator.setProgress(((current_duration_right + total_duration_right) / 5), false);
       // keep track of start time/frame for later
       right_duration_indicator.tStart = t;  // (not accounting for frame time here)
       right_duration_indicator.frameNStart = frameN;  // exact frame index
       
       right_duration_indicator.setAutoDraw(true);
-    }
-    
-    
-    // if right_duration_indicator is active this frame...
-    if (right_duration_indicator.status === PsychoJS.Status.STARTED) {
-      // update params
-      right_duration_indicator.setProgress(((current_duration_right + total_duration_right) / 5), false);
     }
     
     frameRemains = 0 + 5 - psychoJS.window.monitorFramePeriod * 0.75;// most of one frame period left
@@ -1963,7 +1857,6 @@ function show_facesRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -2025,8 +1918,7 @@ function show_facesRoutineEnd(snapshot) {
         }
     }
     
-    if (routineForceEnded) {
-        routineTimer.reset();} else if (show_facesMaxDurationReached) {
+    if (show_facesMaxDurationReached) {
         show_facesClock.add(show_facesMaxDuration);
     } else {
         show_facesClock.add(5.000000);
@@ -2051,8 +1943,6 @@ function feedbackRoutineBegin(snapshot) {
     t = 0;
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
-    // keep track of whether this Routine was forcibly ended
-    routineForceEnded = false;
     feedbackClock.reset(routineTimer.getTime());
     routineTimer.add(3.000000);
     feedbackMaxDurationReached = false;
@@ -2090,11 +1980,6 @@ function feedbackRoutineEachFrame() {
       feedback_textbox.setAutoDraw(true);
     }
     
-    
-    // if feedback_textbox is active this frame...
-    if (feedback_textbox.status === PsychoJS.Status.STARTED) {
-    }
-    
     frameRemains = 0.0 + 3 - psychoJS.window.monitorFramePeriod * 0.75;// most of one frame period left
     if (feedback_textbox.status === PsychoJS.Status.STARTED && t >= frameRemains) {
       // keep track of stop time/frame for later
@@ -2112,7 +1997,6 @@ function feedbackRoutineEachFrame() {
     
     // check if the Routine should terminate
     if (!continueRoutine) {  // a component has requested a forced-end of Routine
-      routineForceEnded = true;
       return Scheduler.Event.NEXT;
     }
     
@@ -2142,8 +2026,7 @@ function feedbackRoutineEnd(snapshot) {
       }
     });
     psychoJS.experiment.addData('feedback.stopped', globalClock.getTime());
-    if (routineForceEnded) {
-        routineTimer.reset();} else if (feedbackMaxDurationReached) {
+    if (feedbackMaxDurationReached) {
         feedbackClock.add(feedbackMaxDuration);
     } else {
         feedbackClock.add(3.000000);
